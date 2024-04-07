@@ -9,15 +9,13 @@ int main() {
 	cin >> T;
 	for (int i = 0; i < T; i++) {
 		int n, money;
-		vector<int> coin;
+		cin >> n;
+		vector<int> coin(n,0);
 		int result[20001] = {};
 		result[0] = 1;
-		cin >> n;
-		for (int j = 0; j < n; j++) {
-			int c;
-			cin >> c;
-			coin.push_back(c);
-		}
+		
+		for (int j = 0; j < n; j++)
+			cin >> coin[j];
 		cin >> money;
 		for (const auto& c:coin) {
 			for (int j = 0; j <= money; j++) {
