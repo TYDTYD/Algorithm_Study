@@ -5,7 +5,7 @@ using namespace std;
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	long long n, k, answer = 0;
+	long long n, k;
 	long long dp[1010][1010][2][2] = {};
 	cin >> n >> k;
 
