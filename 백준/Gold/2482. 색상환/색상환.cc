@@ -6,33 +6,21 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	long long n, k;
-	long long dp[1010][1010][2][2] = {};
+	long long dp[1010][1010] = {};
 	cin >> n >> k;
 
-	dp[1][0][1][0] = 1;
-	dp[1][1][0][1] = 1;
 
-	for (int i = 2; i <= n; i++) {
-		for (int j = 0; j <= k; j++) {
-			for (int p = 0; p < 2; p++) {
-				// 선택을 했을때
-				if (p == 0) {
-					if (j >= 1) {
-						dp[i][j][p][0] += dp[i - 1][j - 1][1][0] % INF;
-						dp[i][j][p][1] += dp[i - 1][j - 1][1][1] % INF;
-					}
-				}
-				else {
-					dp[i][j][p][0] += dp[i - 1][j][0][0] % INF;
-					dp[i][j][p][1] += dp[i - 1][j][0][1] % INF;
-					dp[i][j][p][0] += dp[i - 1][j][1][0] % INF;
-					dp[i][j][p][1] += dp[i - 1][j][1][1] % INF;
-				}
-			}
-		}
+	for (int i = 0; i <= n; i++) {
+		dp[i][0] = 1;
+		dp[i][1] = i;
 	}
 
-	cout << (dp[n][k][0][0] + dp[n][k][1][0] + dp[n][k][1][1]) % INF;
+	for (int i = 2; i <= n; i++) {
+		for (int j = 2; j <= k; j++)
+			dp[i][j]= dp[i - 2][j - 1] + dp[i - 1][j] % INF;
+	}
+
+	cout << (dp[n-1][k] + dp[n-3][k-1]) % INF;
 
 	return 0;
 }
