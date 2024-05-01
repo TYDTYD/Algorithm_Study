@@ -21,9 +21,9 @@ int main() {
 			if (dp[i][j] != 0) {
 				int idx = graph[i][j];
 				if (j + idx < n)
-					dp[i][j + idx] += max(dp[i][j], (long long)1);
+					dp[i][j + idx] += dp[i][j];
 				if (i + idx < n)
-					dp[i + idx][j] += max(dp[i][j], (long long)1);
+					dp[i + idx][j] += dp[i][j];
 			}
 		}
 	}
