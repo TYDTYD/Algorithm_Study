@@ -16,13 +16,12 @@ int main() {
 	}
 
 	sort(shark.begin(), shark.end());
-	while (k != 0) {
+	while (k-- != 0) {
 		int index = lower_bound(shark.begin(), shark.end(), t) - shark.begin();
 		if (index <= 0)
 			break;
 		t += shark[index - 1];
 		shark.erase(shark.begin() + index - 1);
-		k--;
 	}
 
 	cout << t;
