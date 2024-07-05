@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 		for (int i = 0; i < n; i++)
 			cin >> graph[i];
 		bool answer = false;
-		for (int k = 0; k <= 700; k++) {
+		for (int k = 0; k <= 440; k++) {
 			bool graphOut = false;
 			for (int i = 1; i <= n; i++) {
 				for (int j = 1; j <= n; j++) {
