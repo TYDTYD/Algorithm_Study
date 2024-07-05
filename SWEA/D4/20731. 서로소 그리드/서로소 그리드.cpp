@@ -1,52 +1,54 @@
-#include<iostream>
+#include <iostream>
 #include <string>
 using namespace std;
+
+char graph[51][51];
+int n;
 
 int gcd(int a, int b) {
 	if (b == 0)
 		return a;
 	return gcd(b, a % b);
 }
-int main(int argc, char** argv)
-{
+
+bool recur(int k) {
+	for (int i = 1; i <= n; i++) {
+		for (int j = 1; j <= n; j++) {
+			int result = gcd(i + k, j + k);
+			if (result == 1 && graph[i - 1][j - 1] != '1')
+				return false;
+			else if (result != 1 && graph[i - 1][j - 1] == '1')
+				return false;
+		}
+	}
+	return true;
+}
+
+bool isValid() {
+	cin >> n;
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++)
+			cin >> graph[i][j];
+	}
+	for (int i = 0; i <= 440; i++) {
+		if (recur(i))
+			return true;
+	}
+
+	return false;
+}
+
+
+int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	int T;
-	string graph[51] = {};
 	cin >> T;
-	for (int t = 0; t < T; t++) {
-		int n;
-		cin >> n;
-		for (int i = 0; i < n; i++)
-			cin >> graph[i];
-		bool answer = false;
-		for (int k = 0; k <= 440; k++) {
-			bool graphOut = false;
-			for (int i = 1; i <= n; i++) {
-				for (int j = 1; j <= n; j++) {
-					if(gcd(i+k,j+k)==1 && graph[i-1][j-1]=='?'){
-                        graphOut=true;
-                    	break;
-                    }
-                    else if(gcd(i+k,j+k)!=1 && graph[i-1][j-1]=='1'){
-                        graphOut=true;
-                    	break;
-                    }
-                }
-                if (graphOut)
-					break;
-                if(i==n)
-                    answer=true;
-            }
-			if (answer)
-				break;
-		}
-
-		cout << '#' << (t + 1) << ' ';
-		if (answer)
-			cout << "YES" << '\n';
+	for (int i = 0; i < T; i++) {
+		if(isValid())
+			cout << '#' << i + 1 << " YES" << '\n';
 		else
-			cout << "NO" << '\n';
+			cout << '#' << i + 1 << " NO" << '\n';
 	}
-	return 0;//정상종료시 반드시 0을 리턴해야합니다.
+	return 0;
 }
