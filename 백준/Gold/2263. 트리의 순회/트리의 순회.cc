@@ -63,6 +63,8 @@ void build_BT(Node& n, int first, int mid, int end, int idx) {
 }
 
 int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
 	int n, root_Value;
 	cin >> n;
 	for (int i = 0; i < n; i++) {
@@ -88,27 +90,21 @@ int main() {
 			cout << i << ' ';
 		return 0;
 	}
-	// build_BT 왼쪽 오른쪽 두개로 만들어서 풀기
-	// 포스트오더는 마지막이 루트 노드임
 	int leftPos = -1, rightPos = -1;
-	int pos = findRoot(root_Value); // 루트 위치
+	int pos = findRoot(root_Value);
 	Node* rightRoot = nullptr;
 	if (root_Value != inOrder.back()) {
 		rightPos = findRoot(postOrder[1]);
 		rightRoot = new Node(postOrder[1]);
 		root->right = rightRoot;
 	}
-	
-	int posnum = n - pos; // 오른쪽 서브트리의 개수
-	// 왼쪽 서브트리 루트의 값
+	int posnum = n - pos;
 	Node* leftRoot = nullptr;
 	if (postOrder.size() > posnum) {
 		leftPos = findRoot(postOrder[posnum]);
 		leftRoot = new Node(postOrder[posnum]);
 		root->left = leftRoot;
 	}
-	
-	// 왼쪽 오른쪽 서브트리 각각 실행
 	build_BT(*leftRoot, 0, leftPos, pos - 1, posnum);
 	build_BT(*rightRoot, pos+1, rightPos, n-1, 1);
 	root->printPreOrder();
