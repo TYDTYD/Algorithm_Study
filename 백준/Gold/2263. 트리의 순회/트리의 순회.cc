@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 struct Node {
@@ -37,8 +37,7 @@ void build_BT(Node& n, int first, int mid, int end, int idx) {
 		return;
 	if (mid > end || mid < first)
 		return;
-	int rightroot = -1;
-	int leftroot = -1;
+	int rightroot = -1, leftroot = -1;
 	
 	Node* rightRoot = nullptr;
 	if (postOrder.size() > idx+1 && mid!=end) {
@@ -65,18 +64,18 @@ void build_BT(Node& n, int first, int mid, int end, int idx) {
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-	int n, root_Value;
+	int n, root_Value,leftPos = -1, rightPos = -1;
 	cin >> n;
 	for (int i = 0; i < n; i++) {
 		int v;
 		cin >> v;
-		inOrder.push_back(v);
+		inOrder.emplace_back(v);
 		hash_idx[v] = i;
 	}
 	for (int i = 0; i < n; i++) {
 		int v;
 		cin >> v;
-		postOrder.push_back(v);
+		postOrder.emplace_back(v);
 		root_Value = v;
 	}
 	Node* root = new Node(root_Value);
@@ -90,22 +89,22 @@ int main() {
 			cout << i << ' ';
 		return 0;
 	}
-	int leftPos = -1, rightPos = -1;
 	int pos = findRoot(root_Value);
 	Node* rightRoot = nullptr;
+	Node* leftRoot = nullptr;
 	if (root_Value != inOrder.back()) {
 		rightPos = findRoot(postOrder[1]);
 		rightRoot = new Node(postOrder[1]);
 		root->right = rightRoot;
 	}
-	int posnum = n - pos;
-	Node* leftRoot = nullptr;
-	if (postOrder.size() > posnum) {
-		leftPos = findRoot(postOrder[posnum]);
-		leftRoot = new Node(postOrder[posnum]);
+	int posNum = n - pos;
+	
+	if (postOrder.size() > posNum) {
+		leftPos = findRoot(postOrder[posNum]);
+		leftRoot = new Node(postOrder[posNum]);
 		root->left = leftRoot;
 	}
-	build_BT(*leftRoot, 0, leftPos, pos - 1, posnum);
+	build_BT(*leftRoot, 0, leftPos, pos - 1, posNum);
 	build_BT(*rightRoot, pos+1, rightPos, n-1, 1);
 	root->printPreOrder();
 
