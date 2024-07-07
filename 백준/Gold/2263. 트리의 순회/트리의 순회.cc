@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <unordered_map>
 using namespace std;
 
 struct Node {
@@ -22,14 +23,12 @@ struct Node {
 };
 
 vector<int> inOrder, postOrder;
+unordered_map<int, int> hash_idx;
 
-int findRoot(int l,int r, int value) {
-	if (r > inOrder.size())
-		r = inOrder.size();
-	for (int i = l; i < r; i++) {
-		if (value == inOrder[i])
-			return i;
-	}
+int findRoot(int value) {
+	auto it = hash_idx.find(value);
+	if (it != hash_idx.end())
+		return hash_idx[value];
 	return -1;
 }
 
@@ -47,7 +46,7 @@ void build_BT(Node& n, int first, int mid, int end, int idx) {
 		rightRoot = new Node(rightroot);
 		n.right = rightRoot;
 	}
-	int rightPos = findRoot(mid, end+1, rightroot);
+	int rightPos = findRoot(rightroot);
 	int posNum = end - mid;
 	Node* leftRoot = nullptr;
 	if (postOrder.size() > idx+posNum+1 && mid!=first) {
@@ -55,7 +54,7 @@ void build_BT(Node& n, int first, int mid, int end, int idx) {
 		leftRoot = new Node(leftroot);
 		n.left = leftRoot;
 	}
-	int leftPos = findRoot(first, mid+1, leftroot);
+	int leftPos = findRoot(leftroot);
 	if (first <= leftPos && leftPos <= mid && leftRoot!=nullptr)
 		build_BT(*leftRoot, first, leftPos, mid-1, idx+posNum+1);
 	if(mid <= rightPos && rightPos <= end && rightRoot!=nullptr)
@@ -70,6 +69,7 @@ int main() {
 		int v;
 		cin >> v;
 		inOrder.push_back(v);
+		hash_idx[v] = i;
 	}
 	for (int i = 0; i < n; i++) {
 		int v;
@@ -91,10 +91,10 @@ int main() {
 	// build_BT 왼쪽 오른쪽 두개로 만들어서 풀기
 	// 포스트오더는 마지막이 루트 노드임
 	int leftPos = -1, rightPos = -1;
-	int pos = findRoot(0, n, root_Value); // 루트 위치
+	int pos = findRoot(root_Value); // 루트 위치
 	Node* rightRoot = nullptr;
 	if (root_Value != inOrder.back()) {
-		rightPos = findRoot(pos, n, postOrder[1]);
+		rightPos = findRoot(postOrder[1]);
 		rightRoot = new Node(postOrder[1]);
 		root->right = rightRoot;
 	}
@@ -103,7 +103,7 @@ int main() {
 	// 왼쪽 서브트리 루트의 값
 	Node* leftRoot = nullptr;
 	if (postOrder.size() > posnum) {
-		leftPos = findRoot(0, pos, postOrder[posnum]);
+		leftPos = findRoot(postOrder[posnum]);
 		leftRoot = new Node(postOrder[posnum]);
 		root->left = leftRoot;
 	}
