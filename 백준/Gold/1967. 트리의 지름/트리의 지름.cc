@@ -28,7 +28,7 @@ struct Node {
 		
 		if (parent == nullptr)
 			return;
-		if (count == children.size())
+		if (count == (int)children.size())
 			parent->plus(t);
 
 		return;
