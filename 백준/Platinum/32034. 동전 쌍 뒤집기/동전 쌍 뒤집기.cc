@@ -44,8 +44,10 @@ int main() {
 			}
 		}
 		while (!stk.empty()) {
-			if (stk.top().first == 'T')
+			if (stk.top().first == 'T') {
 				answer = -1;
+				break;
+			}
 			stk.pop();
 		}
 		cout << answer << '\n';
