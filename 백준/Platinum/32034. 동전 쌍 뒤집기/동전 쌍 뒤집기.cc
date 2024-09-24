@@ -15,13 +15,11 @@ int main() {
 		string str;
 		cin >> n >> str;
 		for (const auto& s : str) {
-			pair<char,int> t;
+			pair<char,long long> t;
 			if (!stk.empty()) {
 				t = stk.top();
 				stacked = true;
 			}
-			else
-				stacked = false;
 			stk.push({s,pos++});
 			if (stacked) {
 				if (stk.top().first == 'H') {
