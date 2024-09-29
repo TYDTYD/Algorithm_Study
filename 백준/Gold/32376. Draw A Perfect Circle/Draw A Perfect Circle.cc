@@ -4,7 +4,7 @@
 #include <cmath>
 using namespace std;
 
-double dist(double x, double y) {
+double dist(double x,double y) {
 	return sqrt(x * x + y * y);
 }
 
@@ -20,12 +20,12 @@ int main() {
 		v.emplace_back(dist(x, y));
 	}
 	sort(v.begin(), v.end());
-	int answer = 0;
+	int answer = -1;
 	for (vector<double>::iterator it = v.begin(); it != v.end(); it++) {
-		int result = upper_bound(v.begin(), v.end(), max(0.0, *it + k)) - it;
+		int result = it - lower_bound(v.begin(), v.end(), max(0.0, *it - k));
 		answer = max(answer, result);
 	}
-	cout << fixed;
-	cout << answer * (100 / n);
+    cout << fixed;
+	cout << ++answer * (100 / n);
 	return 0;
 }
