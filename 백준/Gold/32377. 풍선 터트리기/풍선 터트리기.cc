@@ -5,15 +5,7 @@ typedef long long ll;
 using namespace std;
 
 ll findLastNumber(ll x, ll y, ll z, ll m) {
-	ll mn = m % x;
-	ll result = m - m % x;
-	if (m % y < mn) {
-		result = m - m % y;
-		mn = m % y;
-	}
-	if (m % z < mn)
-		result = m - m % z;
-	return result;
+	return m - min(m % x, min(m % y, m % z));
 }
 
 ll binary_Search(ll x,ll y,ll z,ll n) {
@@ -50,23 +42,23 @@ int main() {
 		cout << v.front().second << " win";
 		return 0;
 	}
-	ll result1, result2, result3;
-	result1 = binary_Search(x, y, z, n - 1);
-	result2 = binary_Search(x, y, z, n);
-	result3 = binary_Search(x, y, z, n + 1);
+	ll number_front, number, number_back;
+	number_front = binary_Search(x, y, z, n - 1);
+	number = binary_Search(x, y, z, n);
+	number_back = binary_Search(x, y, z, n + 1);
 	
-	if (result2 != result3) {
-		if (result2 % z == 0)
+	if (number != number_back) {
+		if (number % z == 0)
 			cout << "C win";
-		else if (result2 % y == 0)
+		else if (number % y == 0)
 			cout << "B win";
 		else
 			cout << "A win";
 	}
-	else if(result1!=result2){
-		if (result2 % x == 0)
+	else if(number!=number_front){
+		if (number % x == 0)
 			cout << "A win";
-		else if (result2 % y == 0)
+		else if (number % y == 0)
 			cout << "B win";
 		else
 			cout << "C win";
