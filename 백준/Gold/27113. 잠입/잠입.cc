@@ -7,8 +7,7 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
 	int n, m, path = 1;
-	bool flag = false;
-
+	bool flag = true;
 	cin >> n >> m;
 	for (int i = 1; i < n; i++) {
 		int x;
@@ -21,14 +20,11 @@ int main() {
 			cin >> c >> dir;
 			v.emplace_back(make_pair(c, dir));
 		}
-		
-		if (x == 0)
-			continue;
-		else if (x == 1) {
+		if (x == 1) {
 			if (v.front().second == 'R') {
 				// R P
 				if (path >= v.front().first)
-					flag = true;
+					flag = false;
 			}
 			else {
 				// L P
@@ -37,7 +33,7 @@ int main() {
 				path = v.front().first + 1;
 			}
 		}
-		else {
+		else if(x == 2) {
 			// L 과 R이 존재할 때
 			if (v.front().second != v.back().second) {
 				// R L
@@ -54,20 +50,20 @@ int main() {
 				else {
 					// L R
 					if (v.back().first - v.front().first == 1)
-						flag = true;
+						flag = false;
 					// P L R
 					else if (path <= v.front().first)
 						path = v.front().first + 1;
 					// L R P
 					else if (path >= v.back().first)
-						flag = true;
+						flag = false;
 				}
 			}
 			// L 2개 or R 2개
 			else {
 				if (v.front().second == 'R') {
 					if (path >= v.front().first)
-						flag = true;
+						flag = false;
 				}
 				else {
 					if (path <= v.back().first)
@@ -77,13 +73,13 @@ int main() {
 		}
 
 		if (path > m)
-			flag = true;
+			flag = false;
 	}
 
 	if (flag)
-		cout << "NO";
-	else
 		cout << "YES";
+	else
+		cout << "NO";
 
 	return 0;
 }
