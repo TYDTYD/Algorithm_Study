@@ -38,25 +38,19 @@ int main() {
 			if (v.front().second != v.back().second) {
 				// R L
 				if (v.front().second == 'R') {
-					// P R L
-					if (path < v.front().first)
-						continue;
-					// R L P
-					else if (path > v.back().first)
+					// P R L || R L P
+					if (path < v.front().first || path > v.back().first)
 						continue;
 					// R P L
 					path = v.back().first + 1;
 				}
 				else {
 					// L R
-					if (v.back().first - v.front().first == 1)
+					if (v.back().first - v.front().first == 1 || path >= v.back().first)
 						flag = false;
 					// P L R
 					else if (path <= v.front().first)
 						path = v.front().first + 1;
-					// L R P
-					else if (path >= v.back().first)
-						flag = false;
 				}
 			}
 			// L 2개 or R 2개
