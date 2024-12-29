@@ -29,8 +29,7 @@ int main() {
 
 	sort(v.begin(), v.end());
 
-	int answer = (v.size() == 0) ? 0 : 1;
-	int result = (v.size() == 0) ? 0 : 1;
+	int answer = 0, result = (v.size() == 0) ? 0 : 1;
 
 	for (int i = 0; i < int(v.size()) - 1; i++) {
 		if (v[i + 1] - v[i] == 0)
