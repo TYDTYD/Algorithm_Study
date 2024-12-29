@@ -4,9 +4,10 @@
 using namespace std;
 
 int main() {
-	int n;
+	ios::sync_with_stdio(0);
+	cin.tie(0);
+	int n, a, b, answer = 0;
 	cin >> n;
-	int a, b, answer = 0;
 	vector<pair<int,int>> v(n);
 	cin >> a >> b;
 
