@@ -1,12 +1,10 @@
 #include <iostream>
-#include <queue>
 #include <string>
 using namespace std;
 
 int main() {
-	string sentence;
+	string sentence, alpha[8] = { "c=","c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
 	cin >> sentence;
-	string alpha[8] = { "c=","c-", "dz=", "d-", "lj", "nj", "s=", "z=" };
 	int answer = 0;
 
 	for(int i=0; i<sentence.length(); i++){
@@ -30,6 +28,5 @@ int main() {
 	}
 
 	cout << answer;
-
 	return 0;
 }
