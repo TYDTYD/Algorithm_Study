@@ -29,6 +29,8 @@ void solve(int start, int end, int h_start, int h_end, int half, vector<vector<i
 }
 
 int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
 	int n, blue = 0, white = 0;
 	cin >> n;
 	vector<vector<int>> graph(n + 1, (vector<int>(n + 1, 0)));
