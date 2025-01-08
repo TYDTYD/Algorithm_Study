@@ -8,16 +8,15 @@ int main() {
 	int n, p;
 	unordered_map<int,int> result;
 	cin >> n >> p;
-	int r = n;
-	int count = 0;
+	int r = n, i = 0;
 
 	while (result.find((r * n) % p)==result.end()) {
-		result[(r * n) % p] = count;
+		result[(r * n) % p] = i;
 		r = (r * n) % p;
-		count++;
+		i++;
 	}
 
-	cout << count - result[(r * n) % p];
+	cout << i - result[(r * n) % p];
 
 	return 0;
 }
