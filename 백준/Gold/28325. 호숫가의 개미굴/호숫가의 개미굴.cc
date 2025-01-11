@@ -6,39 +6,36 @@ int main() {
 	cin.tie(0);
 	int n;
 	cin >> n;
-	long long answer = 0;
-	bool first = true;
-	bool pass = true;
+	long long case1 = 0, case2 = 0;
+	bool pass1 = true, pass2 = false;
 	for (int i = 0; i < n; i++) {
 		long long c;
 		cin >> c;
-		if (i == 0 && c == 0)
-			first = false;
-		// 쪽방이 있는 경우
 		if (c) {
-			pass = true;
+			pass1 = true;
+			pass2 = true;
 		}
-		// 쪽방이 없는 경우
 		else {
-			if (i == n - 1) {
-				if (first && pass)
-					answer++;
-				continue;
+			if (pass1 && i!=n-1) {
+				case1++;
+				pass1 = false;
 			}
-			// 전 순서의 방을 개미집으로 잡지 않은 경우
-			if (pass) {
-				answer++;
-				pass = false;
-			}
-			// 전 순서의 방을 개미집으로 잡은 경우
 			else {
-				pass = true;
+				pass1 = true;
+			}
+			if (pass2) {
+				case2++;
+				pass2 = false;
+			}
+			else {
+				pass2 = true;
 			}
 		}
-		answer += c;
+		case1 += c;
+		case2 += c;
 	}
 
-	cout << answer;
+	cout << max(case1, case2);
 
 	return 0;
 }
