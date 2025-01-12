@@ -18,7 +18,7 @@ int main() {
 		lld start = 0;
 		lld end = 1e8;
 		lld mid = 0;
-		while (end-start > 1e-7) {
+		while (end-start > 1e-5) {
 			mid = (start + end) / 2;
 			if (t >= calc(a, b, c, d, m, mid)) {
 				start = mid;
