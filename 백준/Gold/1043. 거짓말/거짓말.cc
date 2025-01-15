@@ -2,8 +2,6 @@
 #include <vector>
 using namespace std;
 
-
-
 int findParent(int u, vector<int>& parent) {
 	if (u == parent[u])
 		return u;
@@ -22,13 +20,13 @@ void merge(int u, int v, vector<int>& parent, bool truth[]) {
 }
 
 int main() {
-	int n, m;
+	int n, m, num, answer = 0;
 	cin >> n >> m;
 	vector<int> graph;
 	for (int i = 0; i <= n; i++)
 		graph.emplace_back(i);
 	bool truth[51] = {};
-	int num;
+
 	cin >> num;
 	for (int i = 0; i < num; i++) {
 		int p;
@@ -59,12 +57,9 @@ int main() {
 				truth[people[j]] = true;
 			}
 		}
-		for (int j = 1; j < people.size(); j++) {
+		for (int j = 1; j < people.size(); j++)
 			merge(people[j], people[0], graph,truth);
-		}
 	}
-
-	int answer = 0;
 
 	for (int i = 0; i < m; i++) {
 		bool speak = true;
