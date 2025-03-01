@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #define INF 1e7
 using namespace std;
 
@@ -16,12 +15,6 @@ int sum_w(int x, int y) {
 
 int sum_h(int x) {
 	return v[0][x] + v[1][x];
-}
-
-bool possible(int w, int sum) {
-	if (w >= sum)
-		return true;
-	return false;
 }
 
 void init() {
@@ -54,16 +47,16 @@ void initDP(int n, int m, int w) {
 void solve(int n, int m, int w) {
 	initDP(n, m, w);
 	for (int i = 1; i <= n; i++) {
-		dp[i][0] = min(dp[i][0], dp[i - 1][0] + (possible(w, sum_h(i - 1)) ? 1 : 2));
+		dp[i][0] = min(dp[i][0], dp[i - 1][0] + (w >= sum_h(i - 1) ? 1 : 2));
 		dp[i][1] = min(dp[i][1], dp[i - 1][0] + 1);
 		dp[i][2] = min(dp[i][2], dp[i - 1][0] + 1);
 		if (i > 1) {
 			dp[i][0] = min(dp[i][0], dp[i - 2][0] + 4);
-			dp[i][0] = min(dp[i][0], dp[i - 2][0] + (possible(w, sum_w(i - 2, 0)) ? 1 : 2) + (possible(w, sum_w(i - 2, 1)) ? 1 : 2));
-			dp[i][0] = min(dp[i][0], dp[i - 1][2] + (possible(w, sum_w(i - 2, 1)) ? 2 : 3));
-			dp[i][0] = min(dp[i][0], dp[i - 1][1] + (possible(w, sum_w(i - 2, 0)) ? 2 : 3));
-			dp[i][1] = min(dp[i][1], dp[i - 1][2] + (possible(w, sum_w(i - 2, 1)) ? 1 : 2));
-			dp[i][2] = min(dp[i][2], dp[i - 1][1] + (possible(w, sum_w(i - 2, 0)) ? 1 : 2));
+			dp[i][0] = min(dp[i][0], dp[i - 2][0] + (w >= sum_w(i - 2, 0) ? 1 : 2) + (w >= sum_w(i - 2, 1) ? 1 : 2));
+			dp[i][0] = min(dp[i][0], dp[i - 1][2] + (w >= sum_w(i - 2, 1) ? 2 : 3));
+			dp[i][0] = min(dp[i][0], dp[i - 1][1] + (w >= sum_w(i - 2, 0) ? 2 : 3));
+			dp[i][1] = min(dp[i][1], dp[i - 1][2] + (w >= sum_w(i - 2, 1) ? 1 : 2));
+			dp[i][2] = min(dp[i][2], dp[i - 1][1] + (w >= sum_w(i - 2, 0) ? 1 : 2));
 		}
 	}
 }
