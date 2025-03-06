@@ -6,7 +6,7 @@
 using namespace std;
 
 int root = 1;
-const int mx = 1000 * 15 * 15 + 5;
+const int mx = 1000 * 15 + 5;
 bool check[mx];
 int trie[mx][26];
 unordered_map<string, int> m;
