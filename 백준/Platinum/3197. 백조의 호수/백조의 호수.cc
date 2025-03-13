@@ -20,7 +20,7 @@ struct Space{
 bool visited[1501][1501], iceVisited[1501][1501];
 int beforeVisit[1501][1501];
 int dx[4] = { 1,-1,0,0 }, dy[4] = { 0,0,1,-1 };
-queue<Space*> pos;
+queue<Space> pos;
 vector<int> space;
 vector<vector<int>> v(1501, vector<int>(1501, -1));
 int answer = 1, space1 = -1, space2 = -1;
@@ -56,10 +56,10 @@ bool merge(int x, int y) {
 void count_Bfs(int R, int C, int x, int y, vector<string>& lake) {
 	int dayIndex = 0;
 	while (!pos.empty()) {
-		int x = pos.front()->x;
-		int y = pos.front()->y;
-		int n = pos.front()->num;
-		int d = pos.front()->day;
+		int x = pos.front().x;
+		int y = pos.front().y;
+		int n = pos.front().num;
+		int d = pos.front().day;
 		if (d != dayIndex) {
 			dayIndex = d;
 			if (find_parent(space1) == find_parent(space2)) {
@@ -83,7 +83,7 @@ void count_Bfs(int R, int C, int x, int y, vector<string>& lake) {
 			}
 			if (visited[nx][ny])
 				continue;
-			pos.push(new Space(n, nx, ny, d + 1));
+			pos.emplace(n, nx, ny, d + 1);
 			visited[nx][ny] = true;
 			beforeVisit[nx][ny] = d;
 			lake[nx][ny] = '.';
@@ -96,14 +96,14 @@ void count_Bfs(int R, int C, int x, int y, vector<string>& lake) {
 }
 
 void bfs(int R, int C, int x, int y, int num, bool& swan, vector<string>& lake) {
-	queue<Space*> q;
-	q.push(new Space(num, x, y, 0));
+	queue<Space> q;
+	q.emplace(num, x, y, 0);
 	visited[x][y] = true;
 	if (lake[x][y] == 'L')
 		swan = true;
 	while (!q.empty()) {
-		int x = q.front()->x;
-		int y = q.front()->y;
+		int x = q.front().x;
+		int y = q.front().y;
 		q.pop();
 		for (int i = 0; i < 4; i++) {
 			int nx = x + dx[i];
@@ -115,10 +115,10 @@ void bfs(int R, int C, int x, int y, int num, bool& swan, vector<string>& lake) 
 			if (lake[nx][ny] == 'L')
 				swan = true;
 			else if (lake[nx][ny] == 'X') {
-				pos.push(new Space(num, x, y, 1));
+				pos.emplace(num, x, y, 1);
 				continue;
 			}
-			q.push(new Space(num, nx, ny, 0));
+			q.emplace(num, nx, ny, 0);
 			visited[nx][ny] = true;
 			iceVisited[nx][ny] = true;
 			v[nx][ny] = num;
@@ -160,7 +160,7 @@ int main() {
 	if (pos.empty())
 		cout << 0;
 	else {
-		count_Bfs(R, C, pos.front()->x, pos.front()->y, lake);
+		count_Bfs(R, C, pos.front().x, pos.front().y, lake);
 		cout << answer;
 	}
 	return 0;
