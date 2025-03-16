@@ -18,7 +18,7 @@ int main() {
 			cout << 1000 + a * 100;
 	}
 	else
-		cout << max(max(a, b), c) * 100;
+		cout << max({ a,b,c }) * 100;
 
 	return 0;
 }
