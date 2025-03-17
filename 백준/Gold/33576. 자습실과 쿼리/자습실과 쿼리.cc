@@ -1,5 +1,4 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
 using namespace std;
 
@@ -11,7 +10,6 @@ int main() {
 	vector<long long> wall(n + 1, 0);
 	vector<long long> RightWall(n + 2, 0);
 	vector<long long> LeftWall(n + 1, 0);
-	vector<int> student;
 	for (int i = 0; i < m; i++) {
 		int w, d;
 		cin >> w >> d;
@@ -29,14 +27,11 @@ int main() {
 		}
 		RightWall[i] += RightWall[i + 1];
 	}
+	int L = 0;
+	int R = n + 1;
 	for (int i = 0; i < q; i++) {
 		int s;
 		cin >> s;
-		student.push_back(s);
-	}
-	int L = 0;
-	int R = n + 1;
-	for (auto& s : student) {
 		long long rCount = 0;
 		if (R > s)
 			rCount = RightWall[s] - RightWall[R];
