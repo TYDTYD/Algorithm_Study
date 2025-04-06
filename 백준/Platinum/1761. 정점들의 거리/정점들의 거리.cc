@@ -73,13 +73,11 @@ int LCA(int x, int y) {
 			idx_y = parent[idx_y][idx];
 			idx++;
 		}
-		if (idx == 1) {
-			x = idx_x;
+		if (idx == 1)
 			break;
-		}
 		idx = 0;
 	}
-	return x;
+	return answer;
 }
 
 int main() {
@@ -105,8 +103,7 @@ int main() {
 			x = Equal_Depth(x, y);
 		else if (depth[x] < depth[y])
 			y = Equal_Depth(y, x);
-		LCA(x, y);
-		cout << answer << '\n';
+		cout << LCA(x, y) << '\n';
 	}
 
 	return 0;
