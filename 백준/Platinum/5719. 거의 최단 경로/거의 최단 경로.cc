@@ -22,7 +22,7 @@ int main() {
 			graph[u].push_back({ v,p });
 		}
 
-		int dist[501] = {};
+		int dist[501];
 		bool NotAvailable[501][501];
 		fill(dist, dist + n + 1, INF);
 		for (int i = 0; i <= n; i++)
@@ -60,12 +60,12 @@ int main() {
 		while (!q.empty()) {
 			int node = q.front();
 			q.pop();
-			if (visited[node])
-				continue;
-			visited[node] = true;
 			for (const auto& prev : reverse_graph[node]) {
 				NotAvailable[prev][node] = true;
-				q.push(prev);
+				if (!visited[prev]) {
+					visited[prev] = true;
+					q.push(prev);
+				}
 			}
 		}
 
@@ -94,6 +94,5 @@ int main() {
 		else
 			cout << dist[d] << '\n';
 	}
-
 	return 0;
 }
