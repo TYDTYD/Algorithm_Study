@@ -1,32 +1,23 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 int main() {
-	vector<pair<int, int>> v1;
-	vector<pair<int, int>> v2;
-	pair<int, int> answer;
-	for (int i = 0; i < 3; i++) {
-		int x, y;
-		cin >> x >> y;
-		v1.push_back({ x,0 });
-		v2.push_back({ y,0 });
-	}
+	int x1, x2, x3, y1, y2, y3;
 
-	for (int i = 0; i < 3; i++) {
-		int count1 = 0;
-		int count2 = 0;
-		for (int j = 0; j < 3; j++) {
-			if (v1[i].first == v1[j].first)
-				count1++;
-			if (v2[i].first == v2[j].first)
-				count2++;
-		}
-		if (count1 == 1)
-			answer.first = v1[i].first;
-		if (count2 == 1)
-			answer.second = v2[i].first;
-	}
+	cin >> x1 >> y1;
+	cin >> x2 >> y2;
+	cin >> x3 >> y3;
 
-	cout << answer.first << ' ' << answer.second;
+	if (x1 == x2)
+		cout << x3 << ' ';
+	else if (x2 == x3)
+		cout << x1 << ' ';
+	else
+		cout << x2 << ' ';
+	if (y1 == y2)
+		cout << y3;
+	else if (y2 == y3)
+		cout << y1;
+	else
+		cout << y2;
 	return 0;
 }
