@@ -1,19 +1,15 @@
 #include <iostream>
 #include <algorithm>
-#include <vector>
 using namespace std;
 int main() {
 	int a, b, c;
 	cin >> a >> b >> c;
-	vector<int> v;
-	v.push_back(a);
-	v.push_back(b);
-	v.push_back(c);
-	sort(v.begin(), v.end());
-	int mx = v.back();
-	int mn = v.front();
-	if (mx >= v[0] + v[1])
-		mx = v[0] + v[1] - 1;
-	cout << mx + v[0] + v[1];
+	int arr[3] = { a,b,c };
+	sort(arr, arr + 3);
+	int mx = arr[2];
+	int sum = arr[0] + arr[1];
+	if (mx >= sum)
+		mx = sum - 1;
+	cout << mx + sum;
 	return 0;
 }
