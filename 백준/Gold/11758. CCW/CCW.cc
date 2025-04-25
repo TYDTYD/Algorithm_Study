@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-double cross(double x1, double x2, double x3, double y1, double y2, double y3) {
+double cross(double x1, double x2, double y1, double y2) {
 	return x1 * y2 - x2 * y1;
 }
 
@@ -18,7 +18,7 @@ int main() {
 	lineX2 = x3 - x2;
 	lineY2 = y3 - y2;
 
-	double result = cross(lineX1, lineY1, 0, lineX2, lineY2, 0);
+	double result = cross(lineX1, lineY1, lineX2, lineY2);
 
 	if (result > 0)
 		cout << 1;
