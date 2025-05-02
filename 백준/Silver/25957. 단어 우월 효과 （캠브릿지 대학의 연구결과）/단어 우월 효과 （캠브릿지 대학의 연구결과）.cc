@@ -1,5 +1,5 @@
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <algorithm>
 using namespace std;
@@ -9,17 +9,14 @@ int main() {
 	cin.tie(0);
 	int n;
 	cin >> n;
-	map<string, string> hash;
+	unordered_map<string, string> hash;
 	for (int i = 0; i < n; i++) {
-		string s;
+		string s, key = "", tmp = "";
 		cin >> s;
-		string key = "";
-		string tmp = "";
 		for (int i = 0; i < s.length(); i++) {
 			if (i == 0 || i == s.length() - 1) {
-				if (i == s.length() - 1) {
+				if (i == s.length() - 1)
 					sort(tmp.begin(), tmp.end());
-				}
 				key += tmp;
 				key += s[i];
 			}
@@ -33,15 +30,12 @@ int main() {
 	cin >> m;
 	
 	for (int i = 0; i < m; i++) {
-		string s;
-		string key = "";
-		string tmp = "";
+		string s, key = "",tmp = "";
 		cin >> s;
 		for (int j = 0; j < s.length(); j++) {
 			if (j == 0 || j == s.length() - 1) {
-				if (j == s.length() - 1) {
+				if (j == s.length() - 1)
 					sort(tmp.begin(), tmp.end());
-				}
 				key += tmp;
 				key += s[j];
 			}
