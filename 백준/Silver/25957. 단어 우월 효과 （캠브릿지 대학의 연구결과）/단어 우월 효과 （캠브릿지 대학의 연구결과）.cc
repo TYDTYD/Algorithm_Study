@@ -30,7 +30,7 @@ int main() {
 	cin >> m;
 	
 	for (int i = 0; i < m; i++) {
-		string s, key = "",tmp = "";
+		string s, key = "", tmp = "";
 		cin >> s;
 		for (int j = 0; j < s.length(); j++) {
 			if (j == 0 || j == s.length() - 1) {
@@ -42,10 +42,7 @@ int main() {
 			else
 				tmp += s[j];
 		}
-		if (i != m - 1)
-			cout << hash[key] << ' ';
-		else
-			cout << hash[key];
+		cout << hash[key] << ' ';
 	}
 
 	return 0;
