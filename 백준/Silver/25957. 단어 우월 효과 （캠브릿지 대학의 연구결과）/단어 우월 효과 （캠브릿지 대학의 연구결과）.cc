@@ -13,9 +13,10 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		string s, key = "", tmp = "";
 		cin >> s;
-		for (int i = 0; i < s.length(); i++) {
-			if (i == 0 || i == s.length() - 1) {
-				if (i == s.length() - 1) {
+		int size = s.length();
+		for (int i = 0; i < size; i++) {
+			if (i == 0 || i == size - 1) {
+				if (i == size - 1) {
 					sort(tmp.begin(), tmp.end());
 					key += tmp;
 				}
@@ -33,9 +34,10 @@ int main() {
 	for (int i = 0; i < m; i++) {
 		string s, key = "", tmp = "";
 		cin >> s;
-		for (int j = 0; j < s.length(); j++) {
-			if (j == 0 || j == s.length() - 1) {
-				if (j == s.length() - 1) {
+		int size = s.length();
+		for (int j = 0; j < size; j++) {
+			if (j == 0 || j == size - 1) {
+				if (j == size - 1) {
 					sort(tmp.begin(), tmp.end());
 					key += tmp;
 				}
