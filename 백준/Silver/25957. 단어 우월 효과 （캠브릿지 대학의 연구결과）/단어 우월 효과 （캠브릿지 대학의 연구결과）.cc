@@ -15,9 +15,10 @@ int main() {
 		cin >> s;
 		for (int i = 0; i < s.length(); i++) {
 			if (i == 0 || i == s.length() - 1) {
-				if (i == s.length() - 1)
+				if (i == s.length() - 1) {
 					sort(tmp.begin(), tmp.end());
-				key += tmp;
+					key += tmp;
+				}
 				key += s[i];
 			}
 			else
@@ -34,9 +35,10 @@ int main() {
 		cin >> s;
 		for (int j = 0; j < s.length(); j++) {
 			if (j == 0 || j == s.length() - 1) {
-				if (j == s.length() - 1)
+				if (j == s.length() - 1) {
 					sort(tmp.begin(), tmp.end());
-				key += tmp;
+					key += tmp;
+				}
 				key += s[j];
 			}
 			else
