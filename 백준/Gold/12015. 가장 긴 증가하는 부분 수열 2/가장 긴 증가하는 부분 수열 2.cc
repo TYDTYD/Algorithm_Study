@@ -3,14 +3,14 @@
 #include <vector>
 using namespace std;
 
-int LCS(vector<int>& list) {
+int LCS(vector<int>& arr) {
 	vector<int> result;
-	for (int i = 0; i < list.size(); i++) {
-		if (result.empty() || result.back() < list[i])
-			result.push_back(list[i]);
-		else if (result.back() > list[i]) {
-			auto it = lower_bound(result.begin(), result.end(), list[i]);
-			*it = list[i];
+	for (const int& n:arr) {
+		if (result.empty() || result.back() < n)
+			result.push_back(n);
+		else if (result.back() > n) {
+			auto it = lower_bound(result.begin(), result.end(), n);
+			*it = n;
 		}
 	}
 	return result.size();
