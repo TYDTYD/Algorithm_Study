@@ -3,7 +3,7 @@
 #include <set>
 using namespace std;
 
-vector<int> graph[100001];
+vector<int> graph[10001];
 int disc[10001], low[10001];
 bool visited[10001];
 int timeCounter = 1;
