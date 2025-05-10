@@ -14,10 +14,8 @@ void merge(int x, int y, vector<int>& p) {
 	int x_parent = find_parent(x, p);
 	int y_parent = find_parent(y, p);
 	
-	if (x_parent != y_parent) {
+	if (x_parent != y_parent)
 		p[y_parent] = x_parent;
-	}
-	return;
 }
 
 bool isOverlap(double x1, double y1, double r1, double x2, double y2, double r2) {
@@ -48,17 +46,14 @@ int main() {
 
 		for (int i = 1; i <= n; i++) {
 			for (int j = i + 1; j <= n; j++) {
-				if (isOverlap(region[i][0], region[i][1], region[i][2], region[j][0], region[j][1], region[j][2])) {
-					if (find_parent(i, parent) != find_parent(j, parent))
-						merge(i, j, parent);
-				}
+				if (isOverlap(region[i][0], region[i][1], region[i][2], region[j][0], region[j][1], region[j][2]))
+					merge(i, j, parent);
 			}
 		}
 
 		unordered_set<int> group;
-		for (int i = 1; i <= n; i++) {
+		for (int i = 1; i <= n; i++)
 			group.insert(find_parent(i, parent));
-		}
 		cout << group.size() << '\n';
 	}
 
