@@ -14,12 +14,10 @@ int main() {
 	cin >> x1 >> y1 >> r1 >> x2 >> y2 >> r2;
 
 	double d = dist(x1, y1, x2, y2);
-	double num = r1 + r2;
 	double answer = 0;
 
-	if (d <= abs(r1 - r2)) {
+	if (d <= abs(r1 - r2))
 		answer = min(r1, r2) * min(r1, r2) * pie;
-	}
 	else if (d < r1 + r2) {
 		double cos1 = (d * d + r1 * r1 - r2 * r2) / (2 * r1 * d);
 		double theta1 = acos(cos1) * 2;
