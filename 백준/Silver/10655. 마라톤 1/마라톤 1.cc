@@ -13,12 +13,12 @@ int main() {
 	cin.tie(0);
 	int n;
 	cin >> n;
-	vector<pair<int, int>> v;
+	vector<pair<int, int>> v(n);
 	int result = 0;
 	for (int i = 0; i < n; i++) {
 		int x, y;
 		cin >> x >> y;
-		v.push_back({ x,y });
+		v[i] = { x,y };
 		result = (i > 0) ? result += GetDist(v[i].first, v[i].second, v[i - 1].first, v[i - 1].second) : result;
 	}
 	priority_queue<int,vector<int>,greater<int>> pq;
