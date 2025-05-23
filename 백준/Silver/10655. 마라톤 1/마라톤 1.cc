@@ -9,6 +9,8 @@ int GetDist(int x1, int y1, int x2, int y2) {
 }
 
 int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0);
 	int n;
 	cin >> n;
 	vector<pair<int, int>> v;
