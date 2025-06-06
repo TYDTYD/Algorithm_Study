@@ -33,28 +33,22 @@ int main() {
 	Line l2 = Line(x1, y1, x2, y2);
 
 	Vector v1;
-	v1.makeVector(l1.x1, l1.y1, l2.x1, l2.y1);
+	v1.makeVector(l1.x1, l1.y1, l1.x2, l1.y2);
 
 	Vector v2;
-	v2.makeVector(l2.x1, l2.y1, l1.x2, l1.y2);
+	v2.makeVector(l1.x1, l1.y1, l2.x1, l2.y1);
 
 	Vector v3;
 	v3.makeVector(l1.x1, l1.y1, l2.x2, l2.y2);
 
 	Vector v4;
-	v4.makeVector(l2.x2, l2.y2, l1.x2, l1.y2);
+	v4.makeVector(l2.x1, l2.y1, l2.x2, l2.y2);
 
 	Vector v5;
 	v5.makeVector(l2.x1, l2.y1, l1.x1, l1.y1);
 
 	Vector v6;
-	v6.makeVector(l1.x1, l1.y1, l2.x2, l2.y2);
-
-	Vector v7;
-	v7.makeVector(l2.x1, l2.y1, l1.x2, l1.y2);
-
-	Vector v8;
-	v8.makeVector(l1.x2, l1.y2, l2.x2, l2.y2);
+	v6.makeVector(l2.x1, l2.y1, l1.x2, l1.y2);
 
 	Cross c1;
 	Cross c2;
@@ -62,10 +56,10 @@ int main() {
 	Cross c4;
 
 	c1.makeCross(v1, v2);
-	c2.makeCross(v3, v4);
+	c2.makeCross(v1, v3);
 
-	c3.makeCross(v5, v6);
-	c4.makeCross(v7, v8);
+	c3.makeCross(v4, v5);
+	c4.makeCross(v4, v6);
 
 	if (c1.value * c2.value < 0 && c3.value * c4.value < 0) 
 		cout << 1;
