@@ -21,9 +21,10 @@ pair<double, double> pos(double r, int i) {
 }
 
 void solve() {
-	vector<pair<double, double>> posList(8);
+	vector<pair<double, double>> posList;
+	posList.reserve(8);
 	for (int i = 0; i < 8; i++)
-		posList[i] = pos(arr[i], i);
+		posList.push_back(pos(arr[i], i));
 
 	bool plag = true;
 	for (int i = 0; i < 8; i++) {
