@@ -17,7 +17,7 @@ int solution(int N, vector<vector<int>> road, int K) {
     vector<vector<point>> points(N+1);
     int dist[51];
     
-    fill(dist,dist+51,1e9);
+    fill(dist,dist+N+1,1e9);
     
     for(int i=0; i<size; i++){
         points[road[i][0]].push_back({road[i][1],road[i][2]});
