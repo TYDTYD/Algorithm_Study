@@ -41,15 +41,12 @@ int main() {
 
 		for (int i = 0; i < 3; i++) {
 			int nx = x.first;
-			if (i == 0) {
+			if (i == 0)
 				nx++;
-			}
-			else if (i == 1) {
+			else if (i == 1)
 				nx--;
-			}
-			else {
+			else
 				nx *= 2;
-			}
 
 			if (nx < 0 || nx > INF)
 				continue;
@@ -69,12 +66,13 @@ int main() {
 	deque<int> result;
 	while (index != nullptr) {
 		result.push_front(index->pos);
-		index = index->parent;
+		path* prev = index->parent;
+		delete index;
+		index = prev;
 	}
 
-	for (const auto& pos : result) {
+	for (const auto& pos : result)
 		cout << pos << ' ';
-	}
 
 	return 0;
 }
