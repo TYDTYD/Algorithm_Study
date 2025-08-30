@@ -126,40 +126,67 @@ int main() {
 	Point pos = Point(0, 0);
 	bool plag = false;
 
-	for (int i = 0; i < n; i++) {
+	for (int i = 0; i <= n; i++) {
 		long long t;
 		char dir;
-		cin >> t >> dir;
-		if (plag)
-			continue;
-		answer += t;
-		Point start = Point(pos.x, pos.y);		
-		switch (direction)
-		{
+
+		Point start = Point(pos.x, pos.y);
+		Point end = Point();
+		if (i == n) {
+			if (plag)
+				continue;
+			switch (direction)
+			{
+			case Right:
+				end = Point(l + 1, pos.y);
+				pos.x = l + 1;
+				break;
+			case Up:
+				end = Point(pos.x, l + 1);
+				pos.y = l + 1;
+				break;
+			case Left:
+				end = Point(-l - 1, pos.y);
+				pos.x = -l - 1;
+				break;
+			case Down:
+				end = Point(pos.x, -l - 1);
+				pos.y = -l - 1;
+				break;
+			}
+		}
+		else {
+			cin >> t >> dir;
+			if (plag)
+				continue;
+			switch (direction)
+			{
 			case Right:
 				pos.x += t;
 				break;
 			case Up:
-				pos.y += t;				
+				pos.y += t;
 				break;
 			case Left:
-				pos.x -= t;				
+				pos.x -= t;
 				break;
 			case Down:
-				pos.y -= t;		
-				break;			
+				pos.y -= t;
+				break;
+			}
+			end = Point(pos.x, pos.y);
+			answer += t;
 		}
-		
-		Point end = Point(pos.x, pos.y);
+
 		Line path = Line(start, end);
-		bool crossed = false;						
+		bool crossed = false;
 		vector<Point> crossPoints;
 		for (int j = 0; j < static_cast<int>(lines.size()) - 2; j++) {
 			auto result = crossCheck(lines[j], path);
 			if (result.second) {
-				crossPoints.push_back(result.first);				
+				crossPoints.push_back(result.first);
 				crossed = true;
-				plag = true;				
+				plag = true;
 			}
 		}
 
@@ -185,7 +212,14 @@ int main() {
 				break;
 			}
 			long long offset = abs(crossPoint.x - start.x) + abs(crossPoint.y - start.y);
-			answer -= (t - offset);
+			if (i == n)
+				answer += offset;
+			else
+				answer -= (t - offset);
+			continue;
+		}
+		if (i == n) {
+			answer += abs(pos.x - start.x) + abs(pos.y - start.y);
 			continue;
 		}
 		if (isOut(l, pos, direction)) {
@@ -202,86 +236,12 @@ int main() {
 		}
 
 		lines.push_back(path);
-		if(dir == 'L')
+		if (dir == 'L')
 			direction = static_cast<Direction>((direction + 1) % 4);
 		else
-			direction = static_cast<Direction>((direction + 3) % 4);		
+			direction = static_cast<Direction>((direction + 3) % 4);
 	}
 
-	if (plag)
-		cout << answer;
-	else {
-		Point start = Point(pos.x, pos.y);
-		Point end = Point();
-		switch(direction)
-		{
-			case Right:
-				end = Point(l + 1, pos.y);
-				break;
-			case Up:
-				end = Point(pos.x, l + 1);
-				break;
-			case Left:
-				end = Point(-l - 1, pos.y);
-				break;
-			case Down:
-				end = Point(pos.x, -l - 1);
-				break;
-		}
-		Line path = Line(start, end);
-		bool crossed = false;
-		vector<Point> crossPoints;
-		for (int i = 0; i < static_cast<int>(lines.size()) - 2; i++) {
-			auto result = crossCheck(lines[i], path);
-			if (result.second) {
-				crossPoints.push_back(result.first);
-				crossed = true;
-				plag = true;
-			}
-		}
-		if(crossed) {
-			Point crossPoint;
-			switch (direction)
-			{
-			case Right:
-				sort(crossPoints.begin(), crossPoints.end(), PointSortByX);
-				crossPoint = Point(crossPoints.front().x, pos.y);
-				break;
-			case Up:
-				sort(crossPoints.begin(), crossPoints.end(), PointSortByY);
-				crossPoint = Point(pos.x, crossPoints.front().y);
-				break;
-			case Left:
-				sort(crossPoints.begin(), crossPoints.end(), PointSortByX);
-				crossPoint = Point(crossPoints.back().x, pos.y);
-				break;
-			case Down:
-				sort(crossPoints.begin(), crossPoints.end(), PointSortByY);
-				crossPoint = Point(pos.x, crossPoints.back().y);
-				break;
-			}
-			long long offset = abs(crossPoint.x - start.x) + abs(crossPoint.y - start.y);
-			answer += offset;			
-		}
-		else {
-			switch (direction)
-			{
-			case Right:
-				answer += (l - pos.x) + 1;
-				break;
-			case Up:
-				answer += (l - pos.y) + 1;
-				break;
-			case Left:
-				answer += (l + pos.x) + 1;
-				break;
-			case Down:
-				answer += (l + pos.y) + 1;
-				break;
-			}
-		}
-		cout << answer;
-	}
-		
+	cout << answer;
 	return 0;
 }
