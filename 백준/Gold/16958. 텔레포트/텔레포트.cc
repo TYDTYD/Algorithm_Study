@@ -41,7 +41,7 @@ int main() {
 			answer = t < dist ? t : dist;		
 		else if (aIsSpecial) {
 			auto pos = v[b];
-			sort(special_City.begin(), special_City.end(), [&](pair<int, int> p1, pair<int, int> p2) {
+			sort(special_City.begin(), special_City.end(), [&](pair<int, int>& p1, pair<int, int>& p2) {
 				return GetDistance(pos, p1) < GetDistance(pos, p2);
 				});
 			int teleport = GetDistance(v[b], special_City[0]) + t;
@@ -49,7 +49,7 @@ int main() {
 		}
 		else if(bIsSpecial) {
 			auto pos = v[a];
-			sort(special_City.begin(), special_City.end(), [&](pair<int, int> p1, pair<int, int> p2) {
+			sort(special_City.begin(), special_City.end(), [&](pair<int, int>& p1, pair<int, int>& p2) {
 				return GetDistance(pos, p1) < GetDistance(pos, p2);
 				});
 			int teleport = GetDistance(v[a], special_City[0]) + t;
@@ -57,12 +57,12 @@ int main() {
 		}
 		else {
 			auto pos1 = v[a];
-			sort(special_City.begin(), special_City.end(), [&](pair<int, int> p1, pair<int, int> p2) {
+			sort(special_City.begin(), special_City.end(), [&](pair<int, int>& p1, pair<int, int>& p2) {
 				return GetDistance(pos1, p1) < GetDistance(pos1, p2);
 				});
 			int teleport = GetDistance(v[a], special_City[0]) + t;
 			auto pos2 = v[b];
-			sort(special_City.begin(), special_City.end(), [&](pair<int, int> p1, pair<int, int> p2) {
+			sort(special_City.begin(), special_City.end(), [&](pair<int, int>& p1, pair<int, int>& p2) {
 				return GetDistance(pos2, p1) < GetDistance(pos2, p2);
 				});
 			teleport += GetDistance(v[b], special_City[0]);
