@@ -4,13 +4,19 @@
 #include <vector>
 using namespace std;
 
+struct circle {
+	int num;	
+	long long radius;
+	long long inSideRadius = 0;
+	bool isInSideCircle = false;
+	circle(int n, long long r) : num(n), radius(r) {}
+};
+
 struct circlePoint {	
 	int num;
 	long long pos;
 	long long radius;
 	bool isStart;
-	long long inSideRadius = 0;
-	bool isInSideCircle = false;
 	circlePoint(int n, long long p, long long r, bool s) : num(n), pos(p), radius(r), isStart(s) {}
 
 	bool operator<(const circlePoint& other) const {
@@ -35,14 +41,14 @@ int main() {
 	cin >> n;	
 
 	priority_queue<circlePoint, vector<circlePoint>> pq;
-	vector<circlePoint*> circles(n);	
+	vector<circle*> circles(n);	
 
 	for (int i = 0; i < n; i++) {
 		long long x, r;
 		cin >> x >> r;
 		pq.push(circlePoint(i, x - r, r, true));
 		pq.push(circlePoint(i, x + r, r, false));
-		circles[i] = new circlePoint(i, x, r, false);
+		circles[i] = new circle(i, r);
 	}
 
 	int answer = 1;
