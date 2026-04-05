@@ -1,113 +1,110 @@
-#include <iostream>
-#include <queue>
-#include <vector>
-#include <algorithm>
-#define INF 1000000000
-using namespace std;
+#include <iostream> 
+#include <queue> 
+#include <vector> 
+#include <algorithm> 
+#define INF 1000000000 
+using namespace std; 
 
-vector<vector<int>> flow, capacity, adjList;
-vector<int> level, work;
+struct Edge
+{
+	int to, flow, capacity;
+	Edge* rev;
+};
 
-void addEdge(int start, int end, int cap, bool directed) {
-	adjList[start].push_back(end);
-	adjList[end].push_back(start);
-	capacity[start][end] += cap;
-	if(!directed) {
-		capacity[end][start] += cap;
-	}
+void AddEdge(int u, int v, int cap, vector<vector<Edge*>>& graph)
+{
+	Edge* e1 = new Edge{ v, 0, cap, nullptr }; 
+	Edge* e2 = new Edge{ u, 0, 0, e1 }; 
+	e1->rev = e2; 
+	graph[u].push_back(e1); 
+	graph[v].push_back(e2);
 }
+vector<int> level(2005); 
+vector<int> work(2005); 
 
-bool bfs(int s, int t) {
-	fill(level.begin(), level.end(), -1);
-	queue<int> q;
-	q.push(s);
+bool bfs(vector<vector<Edge*>>& graph, int s, int t) { 
+	fill(level.begin(), level.end(), -1); 
+	queue<int> q; 
+	q.push(s); 
 	level[s] = 0;
-	
-	while (!q.empty()) {
-		int cur = q.front();
-		q.pop();
+	while (!q.empty()) 
+	{ 
+		int cur = q.front(); 
+		q.pop(); 
+		for (auto e : graph[cur]) {
+			if (level[e->to] == -1 && e->flow < e->capacity) {
+				level[e->to] = level[cur] + 1;
+				q.push(e->to);
+			}				
+		}
+	} 
+	return level[t] != -1; 
+} 
 
-		for (auto next : adjList[cur]) {
-			if (level[next] == -1 && capacity[cur][next] > flow[cur][next]) {				
-				q.push(next);
-				level[next] = level[cur] + 1;
+int dfs(vector<vector<Edge*>>& graph, int cur, int t, int flow) { 
+	if (cur == t) 
+		return flow; 
+
+	for (int& i = work[cur]; i < graph[cur].size(); i++) { 
+		auto e = graph[cur][i]; 
+		if (level[e->to] == level[cur] + 1 && e->flow < e->capacity) {
+			int curr_flow = min(flow, e->capacity - e->flow);
+			int temp_flow = dfs(graph, e->to, t, curr_flow);
+			if (temp_flow > 0)
+			{
+				e->flow += temp_flow;
+				e->rev->flow -= temp_flow;
+				return temp_flow;
 			}
 		}
-	}
+	} 
+	return 0; 
+} 
 
-	return level[t] != -1;
-}
+int maxFlow(vector<vector<Edge*>>& graph, int s, int t) { 
+	int total = 0;
 
-int dfs(int cur, int t, int f) {
-	if (cur == t)
-		return f;
-
-	for (int& i = work[cur]; i < adjList[cur].size(); i++) {
-		int next = adjList[cur][i];
-		if (level[next] == level[cur] + 1 && capacity[cur][next] - flow[cur][next] > 0) {
-			int available = capacity[cur][next] - flow[cur][next];
-			int ret = dfs(next, t, min(f, available));
-
-			if (ret > 0) {
-				flow[cur][next] += ret;
-				flow[next][cur] -= ret;
-				return ret;
-			}
-		}
-	}
-	return 0;
-}
-
-int maxFlow(int n, int s, int t) {
-	int total = 0;	
-
-	while (bfs(s, t)) {
-		fill(work.begin(), work.end(), 0);
-		while (true) {
-			int flow = dfs(s, t, INF);
-			if (flow == 0)
-				break;
-			total += flow;
-		}
-	}
-	return total;
-}
+	while (bfs(graph, s, t)) { 
+		fill(work.begin(), work.end(), 0); 
+		while (true) { 
+			int flow = dfs(graph, s, t, INF); 
+			if (flow == 0) 
+				break; 
+			total += flow; 
+		} 
+	} 
+	return total; 
+} 
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0);
-
 	int n, m, k;
 	cin >> n >> m >> k;
-
 	const int s = 0;
 	const int t = 2003;
 	const int extra = 2002;
-
-	flow.resize(t + 1, vector<int>(t + 1, 0));
-	capacity.resize(t + 1, vector<int>(t + 1, 0));
-	adjList.resize(t + 1);
-	level.assign(t + 1, -1);
-	work.assign(t + 1, 0);
-
+	
+	vector<vector<Edge*>> graph(2005);
+	
 	for (int i = 1; i <= n; i++) {
 		int num;
 		cin >> num;
-		addEdge(s, i, 1, true);
-		addEdge(extra, i, 1, true);
+		AddEdge(s, i, 1, graph);
+		AddEdge(extra, i, 1, graph);
 		for (int j = 0; j < num; j++) {
 			int task;
 			cin >> task;
-			addEdge(i, 1000 + task, 1, true);
+			AddEdge(i, task + 1000, 1, graph);
 		}
 	}
 
 	for (int task = 1; task <= m; task++)
-		addEdge(1000 + task, t, 1, true);	
-
-	addEdge(s, extra, k, true);
-
-	int answer = maxFlow(2003, s, t);
+		AddEdge(task + 1000, t, 1, graph);
+	
+	AddEdge(s, extra, k, graph);
+	
+	int answer = maxFlow(graph, s, t);
 	cout << answer;
 
 	return 0;
