@@ -28,7 +28,8 @@ bool spfa(vector<vector<Edge>>& graph, int start, int target, vector<pair<int,in
 		int current = q.front();
 		q.pop();
 		inQueue[current] = false;
-		for (int i = 0; i < graph[current].size(); i++) {
+		int n = graph[current].size();
+		for (int i = 0; i < n; i++) {
 			Edge& edge = graph[current][i];
 			if (distance[current] >= INF) 
 				continue;
