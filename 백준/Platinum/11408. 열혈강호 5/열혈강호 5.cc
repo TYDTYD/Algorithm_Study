@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#define INF (int)1e9
+#define INF 1e9
 using namespace std;
 
 struct Edge {
@@ -18,7 +18,7 @@ void AddEdge(vector<vector<Edge>>& graph, int from, int to, int capacity, int co
 bool spfa(vector<vector<Edge>>& graph, int start, int target, vector<pair<int,int>>& parent) {
 	int n = graph.size();
 	vector<int> distance(n + 5, INF);
-	bool inQueue[1001] = {};
+	bool inQueue[805] = {};
 	queue<int> q;	
 	q.push(start);
 	distance[start] = 0;
@@ -31,8 +31,6 @@ bool spfa(vector<vector<Edge>>& graph, int start, int target, vector<pair<int,in
 		int n = graph[current].size();
 		for (int i = 0; i < n; i++) {
 			Edge& edge = graph[current][i];
-			if (distance[current] >= INF) 
-				continue;
 
 			if (edge.capacity > 0 && distance[edge.to] > distance[current] + edge.cost) {
 				distance[edge.to] = distance[current] + edge.cost;
@@ -89,22 +87,18 @@ int main() {
 	int target = n + m + 1;
 
 	for (int i = 1; i <= n; i++) {
-		// 시작점으로부터 직원까지의 간선을 추가한다.
 		AddEdge(graph, start, i, 1, 0);
 		int num;
 		cin >> num;
 		for (int j = 0; j < num; j++) {
 			int job, pay;
 			cin >> job >> pay;			
-			// 직원에서 일까지의 간선을 추가한다.
 			AddEdge(graph, i, job + n, 1, pay);
 		}
 	}
 
-	for (int i = n + 1; i <= n + m; i++) {
-		// 일에서 도착점까지의 간선을 추가한다.
-		AddEdge(graph, i, target, 1, 0);
-	}
+	for (int i = n + 1; i <= n + m; i++)
+		AddEdge(graph, i, target, 1, 0);	
 
 	pair<int, int> answer = MCMF(graph, start, target);
 	cout << answer.first << '\n' << answer.second;
