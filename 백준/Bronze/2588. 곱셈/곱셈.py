@@ -1,0 +1,11 @@
+a=input()
+b=input()
+
+answer1=int(a)*int(b[2])
+answer2=int(a)*int(b[1])
+answer3=int(a)*int(b[0])
+answer4=int(a)*int(b)
+print(answer1)
+print(answer2)
+print(answer3)
+print(answer4)
